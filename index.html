@@ -6,7 +6,7 @@
 
 </head>
 <body>
-	<div id="container1">
+	<div id="container1" class="container">
 		<ul id= "cat_list">
 			
 		</ul>
@@ -14,7 +14,7 @@
 	
 	<div class="separation"></div>
 
-	<div id="container2">
+	<div id="container2" class="container">
 		<img id="catPic" src="" />
 	
 		<div class="countContainer">
@@ -23,8 +23,34 @@
 		</div>
 	</div>	
 	
+	<div class="separation"></div>
+	
+	<div class="container">
+		<button type="button" id="admin_button">Admin Panel</button>
+		<br/><br/>
+		
+		<div id="admin_area">
+			<form class="admin">
+				<label for="cat_name">Name: </label>
+				<input type="text" name="cat_name"/>
+				<br/><br/>
+				<label for="path">Path/Link: </label>
+				<input type="text" name="path"/>
+				<br/><br/>
+				<label for="path">Path/Link: </label>
+				<input type="number" min="0" name="count"/>
+				<br/><br/>
 
-	<script type="text/javascript" src="appRefactored.js"></script>
+				<button type="button" id="cancel">Cancel</button>
+				<button type="button" id="save">Save</button>
+			</form>
+		
+		</div>
+
+	
+	</div>		
+	
+	<script type="text/javascript" src="app.js"></script>
 	
 </body>
 </html>

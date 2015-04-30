@@ -4,7 +4,7 @@
 			
 		}
 
-#container2{
+.container{
 			float: left;
 			
 		}
@@ -24,8 +24,23 @@ ul {
 	margin:0;
 	list-style: none;
 	display: block;
-	
+}
 
+#admin_area {
+	display:none;
+}
+
+
+.admin label{
+	display: block;
+	width: 80px;
+	float: left;
+}
+
+.admin input {
+	display: block;
+	float: left;
+	margin-left: 5px;
 }
 
 li {
