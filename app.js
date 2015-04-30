@@ -45,9 +45,6 @@ function getClickedCat(){
 	}
 }
 
-
-
-
 document.getElementById("catPic").addEventListener("click", function(){
 		var currentCat = getClickedCat();
 		currentCat.incrementCount();
@@ -55,3 +52,23 @@ document.getElementById("catPic").addEventListener("click", function(){
 	
 });
 
+
+var adminButton = document.getElementById("admin_button");
+var adminArea = document.getElementById("admin_area");
+
+
+var showAdminArea = function(){
+	adminArea.style.display = "block";
+};
+var hideAdminArea = function(){
+	adminArea.style.display = "none";
+};	
+
+adminButton.addEventListener('click', function(){
+	if (adminArea.style.display == "none"){
+		showAdminArea();
+	}else{
+		hideAdminArea();
+	}	
+
+});
