@@ -1,0 +1,36 @@
+#container1{
+			float: left;
+			width: 100px;
+			
+		}
+
+#container2{
+			float: left;
+			
+		}
+		
+#catPic {
+			height: 450px;
+			width: 450px;
+		}
+
+.separation {
+			float: left;
+			height: 300px;
+			width: 50px;
+		}
+ul {
+	padding:0;
+	margin:0;
+	list-style: none;
+	display: block;
+	
+
+}
+
+li {
+	border: 1px solid black;
+	margin: 5px 0 5px 0;
+	background: lightGrey;
+	border-radius: 3px;
+}
