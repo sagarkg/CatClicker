@@ -55,6 +55,11 @@ document.getElementById("catPic").addEventListener("click", function(){
 
 var adminButton = document.getElementById("admin_button");
 var adminArea = document.getElementById("admin_area");
+var saveButton = document.getElementById("save"); 
+var cancelButton = document.getElementById("cancel"); 
+var adminCatName = document.getElementById("admin_cat_name");
+var adminPath = document.getElementById("admin_path");
+var adminCount = document.getElementById("admin_count");
 
 
 var showAdminArea = function(){
@@ -72,3 +77,12 @@ adminButton.addEventListener('click', function(){
 	}	
 
 });
+
+cancelButton.addEventListener('click', function(){
+	adminCatName.value="";
+	adminPath.value="";
+	adminCount.value="";
+
+});
+
+
