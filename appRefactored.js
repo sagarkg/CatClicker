@@ -1,10 +1,8 @@
 var model = {
 	//Current cat showing on the catDetailView
 	currentCat: null,
-	currentCatIndex:null,
 
 	//Cat class constructor
-	/*
 	Cat : function(name, image){
 			this.name = name;
 			this.image = image;
@@ -15,6 +13,8 @@ var model = {
 			}
 	},
 
+
+	
 	generateCats: function(){
 		var cat1, cat2, cat3, cat4, cat5;
 		cat1 = new model.Cat("Cattie", "images/cat.jpg");
@@ -27,17 +27,8 @@ var model = {
 
 		return catList;
 	},
-	*/
-
-	CatList : [
-	{name: "Cattie" , image: "images/cat.jpg" , count: 0},
-	{name: "Chewie", image: "images/cat2.jpg" , count: 0},
-	{name: "Zestie", image: "images/cat3.jpg" , count: 0},
-	{name: "Grumpie" , image: "images/cat4.jpg" , count: 0},
-	{name: "Cutie" , image: "images/cat5.jpg" , count: 0}
-	]
-
-
+	
+	
 };
 
 
@@ -54,59 +45,29 @@ var controller = {
 
 	setCurrentCat: function(cat){
 		model.currentCat = cat;
-		var index = controller.evaluateCurrentCatIndex(cat);
-		controller.setCurrentCatIndex(index);
-
 	},
 
 	getCurrentCat:function(){
 		return model.currentCat;
 	},
 
-	setCurrentCatIndex:function(index){
-		model.currentCatIndex = index;
-	},
-
-	getCurrentCatIndex: function(){
-		return model.currentCatIndex;
-	},
-
-	evaluateCurrentCatIndex: function(cat){
-		for (var i=0; i< model.CatList.length; i++){
-			if (cat.name == model.CatList[i].name && cat.image == model.CatList[i].image){
-				return i;
-				break;
-			}
-		}
-	},
-
 	updateCurrentCat: function(name, path, count){
-		var index = controller.getCurrentCatIndex();
-
 		model.currentCat.name = name;
 		model.currentCat.image = path;
 		model.currentCat.count = count;
 
-		controller.updateCurrentCatList(index, model.currentCat);
 		
 		catDetailView.render(model.currentCat);
 		adminPanelView.render(model.currentCat);
-		
-	},
 
-	updateCurrentCatList:function(index, cat){
-		model.CatList[index].name = cat.name;
-		model.CatList[index].image = cat.image;
-		model.CatList[index].count = cat.count;
 	},
 
 	getCats: function(){
-		//return model.generateCats();
-		return model.CatList;
+		return model.generateCats();
 	},
 
 	incrementCounter:function(){
-		model.currentCat.count++;
+		model.currentCat.incrementCount();
 		catDetailView.render(model.currentCat);
 		adminPanelView.render(model.currentCat);
 	},
@@ -118,44 +79,29 @@ var controller = {
 
 var catListView = {
 	init: function(){
-		var catList = controller.getCats();
-		controller.setCurrentCat(catList[0]);
-		for (var i=0; i< catList.length; i++){
-			var listElement = document.createElement("li");
-			
-			var element = document.getElementById("cat_list");
-			element.appendChild(listElement);
-
-
-		}
-
 		catListView.render();
 	},	
 
 	render: function(){
 		var catList = controller.getCats();
-		var listElements = document.getElementsByTagName("li");
-		for(var i=0; i<listElements.length; i++){
-			
-			//var node = document.createTextNode(catList[i].name);
-			listElements[i].innerHTML = catList[i].name;
+		controller.setCurrentCat(catList[0]);
+		catList.forEach(function(cat){
+			var listElement = document.createElement("li");
+			var node = document.createTextNode(cat.name);
+			listElement.appendChild(node);
 
-			listElements[i].addEventListener("click", (function(i){
+			var element = document.getElementById("cat_list");
+			element.appendChild(listElement);
+
+			listElement.addEventListener("click", (function(cat){
 
 				return function(){
-					
-					controller.setCurrentCat(catList[i]);
-					catDetailView.render(catList[i]);
-					adminPanelView.render(catList[i])
-
+					controller.setCurrentCat(cat);
+					catDetailView.render(cat);
 				};
 				
-			})(i));
-			
-		}
-
-
-		
+			})(cat));
+		});
 	}
 };
 
@@ -201,11 +147,10 @@ var adminPanelView = {
 		cancelButton = document.getElementById("cancel"); 
 
 
-			
+		var cat = controller.getCurrentCat();	
 		
-				
+		
 		adminButton.addEventListener('click', function(){
-			var cat = controller.getCurrentCat();
 			if (controller.adminView == false){
 				adminArea.style.display = "block";
 				adminPanelView.render(cat);
@@ -228,7 +173,7 @@ var adminPanelView = {
 			var path = imageCatPath.value;
 			var count = imageCatCount.value;
 			controller.updateCurrentCat(catName, path, count);
-			catListView.render();
+
 		});
 
 	},
