@@ -18,6 +18,32 @@ cat5 = new Cat ("Cutie", "images/cat5.jpg");
 
 catList = [cat1, cat2, cat3, cat4, cat5];
 
+//Pic Area
+var imageCatName = document.getElementById("catName");
+var imageCatPath= document.getElementById("catPic");
+var imageCatCount= document.getElementById("count");
+
+//Admin Area Buttons
+var adminButton = document.getElementById("admin_button");
+var adminArea = document.getElementById("admin_area");
+var saveButton = document.getElementById("save"); 
+var cancelButton = document.getElementById("cancel"); 
+
+//Admin Area Fields
+var adminCatName = document.getElementById("admin_cat_name");
+var adminPath = document.getElementById("admin_path");
+var adminCount = document.getElementById("admin_count");
+
+
+var showAdminArea = function(){
+	adminArea.style.display = "block";
+};
+var hideAdminArea = function(){
+	adminArea.style.display = "none";
+};	
+
+
+
 catList.forEach(function(cat){
 	var listElement = document.createElement("li");
 	var node = document.createTextNode(cat.name);
@@ -27,9 +53,12 @@ catList.forEach(function(cat){
 	element.appendChild(listElement);
 
 	listElement.addEventListener("click", function(){
-		document.getElementById("catPic").src = cat.image;
-		document.getElementById("catName").innerHTML = cat.name;
-		document.getElementById("count").innerHTML = cat.count;
+		imageCatPath.src = cat.image;
+		imageCatName.innerHTML = cat.name;
+		imageCatCount.innerHTML = cat.count;
+		adminCatName.value = cat.name;
+		adminPath.value = cat.image;
+		adminCount.value = cat.count;
 	});
 });
 
@@ -53,21 +82,6 @@ document.getElementById("catPic").addEventListener("click", function(){
 });
 
 
-var adminButton = document.getElementById("admin_button");
-var adminArea = document.getElementById("admin_area");
-var saveButton = document.getElementById("save"); 
-var cancelButton = document.getElementById("cancel"); 
-var adminCatName = document.getElementById("admin_cat_name");
-var adminPath = document.getElementById("admin_path");
-var adminCount = document.getElementById("admin_count");
-
-
-var showAdminArea = function(){
-	adminArea.style.display = "block";
-};
-var hideAdminArea = function(){
-	adminArea.style.display = "none";
-};	
 
 adminButton.addEventListener('click', function(){
 	if (adminArea.style.display == "none"){
@@ -82,6 +96,7 @@ cancelButton.addEventListener('click', function(){
 	adminCatName.value="";
 	adminPath.value="";
 	adminCount.value="";
+	hideAdminArea();
 
 });
 
