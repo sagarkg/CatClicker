@@ -40,6 +40,7 @@ var controller = {
 		
 		catListView.init();
 		catDetailView.init();
+		adminPanelView.init();
 
 	},
 
@@ -52,6 +53,12 @@ var controller = {
 		return model.currentCat;
 	},
 
+	updateCurrentCat: function(name, path, count){
+		model.currentCat.name = name;
+		model.currentCat.image = path;
+		model.currentCat.count = count;
+	},
+
 	getCats: function(){
 		return model.generateCats();
 	},
@@ -59,7 +66,10 @@ var controller = {
 	incrementCounter:function(){
 		model.currentCat.incrementCount();
 		catDetailView.render(model.currentCat);
-	}
+		adminPanelView.render(model.currentCat);
+	},
+
+	adminView: false,
 
 };
 
@@ -113,6 +123,59 @@ var catDetailView = {
 		this.catPicElem.src = cat.image;
 		this.catNameElem.innerHTML = cat.name;
 		this.countElem.innerHTML = cat.count;
+
+	}
+
+};
+
+
+var adminPanelView = {
+
+	init: function(){
+		//Admin Fields
+		this.imageCatName = document.getElementById("admin_cat_name");
+		this.imageCatPath= document.getElementById("admin_path");
+		this.imageCatCount= document.getElementById("admin_count");
+
+		//Admin Buttons
+		this.adminButton = document.getElementById("admin_button");
+		adminArea = document.getElementById("admin_area");
+		this.saveButton = document.getElementById("save"); 
+		this.cancelButton = document.getElementById("cancel"); 
+
+
+		var cat = controller.getCurrentCat();	
+		
+		
+		this.adminButton.addEventListener('click', function(){
+			if (controller.adminView == false){
+				adminArea.style.display = "block";
+				adminPanelView.render(cat);
+				controller.adminView = true;
+			}else{
+				adminArea.style.display = "none";
+				controller.adminView = false;
+			
+			}
+		});
+
+		this.cancelButton.addEventListener('click', function(){
+			adminArea.style.display = "none";
+			controller.adminView = false;
+
+		});
+
+		this.saveButton.addEventListener('click', function(){
+
+
+		});
+
+	},
+
+	render: function(cat) {
+		this.imageCatName.value = cat.name;
+		this.imageCatPath.value = cat.image;
+		this.imageCatCount.value = cat.count;
 
 	}
 
