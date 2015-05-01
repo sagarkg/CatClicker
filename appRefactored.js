@@ -28,8 +28,7 @@ var model = {
 		return catList;
 	},
 	
-
-
+	
 };
 
 
@@ -44,7 +43,6 @@ var controller = {
 
 	},
 
-
 	setCurrentCat: function(cat){
 		model.currentCat = cat;
 	},
@@ -57,6 +55,11 @@ var controller = {
 		model.currentCat.name = name;
 		model.currentCat.image = path;
 		model.currentCat.count = count;
+
+		
+		catDetailView.render(model.currentCat);
+		adminPanelView.render(model.currentCat);
+
 	},
 
 	getCats: function(){
@@ -133,21 +136,21 @@ var adminPanelView = {
 
 	init: function(){
 		//Admin Fields
-		this.imageCatName = document.getElementById("admin_cat_name");
-		this.imageCatPath= document.getElementById("admin_path");
-		this.imageCatCount= document.getElementById("admin_count");
+		imageCatName = document.getElementById("admin_cat_name");
+		imageCatPath= document.getElementById("admin_path");
+		imageCatCount= document.getElementById("admin_count");
 
 		//Admin Buttons
-		this.adminButton = document.getElementById("admin_button");
+		adminButton = document.getElementById("admin_button");
 		adminArea = document.getElementById("admin_area");
-		this.saveButton = document.getElementById("save"); 
-		this.cancelButton = document.getElementById("cancel"); 
+		saveButton = document.getElementById("save"); 
+		cancelButton = document.getElementById("cancel"); 
 
 
 		var cat = controller.getCurrentCat();	
 		
 		
-		this.adminButton.addEventListener('click', function(){
+		adminButton.addEventListener('click', function(){
 			if (controller.adminView == false){
 				adminArea.style.display = "block";
 				adminPanelView.render(cat);
@@ -159,23 +162,26 @@ var adminPanelView = {
 			}
 		});
 
-		this.cancelButton.addEventListener('click', function(){
+		cancelButton.addEventListener('click', function(){
 			adminArea.style.display = "none";
 			controller.adminView = false;
 
 		});
 
-		this.saveButton.addEventListener('click', function(){
-
+		saveButton.addEventListener('click', function(){
+			var catName = imageCatName.value;
+			var path = imageCatPath.value;
+			var count = imageCatCount.value;
+			controller.updateCurrentCat(catName, path, count);
 
 		});
 
 	},
 
 	render: function(cat) {
-		this.imageCatName.value = cat.name;
-		this.imageCatPath.value = cat.image;
-		this.imageCatCount.value = cat.count;
+		imageCatName.value = cat.name;
+		imageCatPath.value = cat.image;
+		imageCatCount.value = cat.count;
 
 	}
 
