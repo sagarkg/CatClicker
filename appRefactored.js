@@ -1,34 +1,14 @@
+/*MVC in pure Javascript without using any frameworks */
+
+//Model 
 var model = {
-	//Current cat showing on the catDetailView
+	//Current cat showing in the catDetailView
 	currentCat: null,
-	currentCatIndex:null,
+	
+	//Index(from catList array) of the currently displayed cat
+	currentCatIndex:null;
 
-	//Cat class constructor
-	/*
-	Cat : function(name, image){
-			this.name = name;
-			this.image = image;
-			this.count = 0;
-
-			this.incrementCount = function incrementCount(){
-				this.count++;
-			}
-	},
-
-	generateCats: function(){
-		var cat1, cat2, cat3, cat4, cat5;
-		cat1 = new model.Cat("Cattie", "images/cat.jpg");
-		cat2 = new model.Cat ("Chewie", "images/cat2.jpg");
-		cat3 = new model.Cat ("Zestie", "images/cat3.jpg");
-		cat4 = new model.Cat ("Grumpie", "images/cat4.jpg");
-		cat5 = new model.Cat ("Cutie", "images/cat5.jpg");
-
-		var catList = [cat1, cat2, cat3, cat4, cat5];
-
-		return catList;
-	},
-	*/
-
+	//Collection of cat objects.
 	CatList : [
 	{name: "Cattie" , image: "images/cat.jpg" , count: 0},
 	{name: "Chewie", image: "images/cat2.jpg" , count: 0},
@@ -40,10 +20,10 @@ var model = {
 
 };
 
-
+//Controller
 var controller = {
 
-
+	//Initialize initial state of app for catlistView, catDetailView and adminPanelView
 	init: function(){
 		
 		catListView.init();
@@ -52,6 +32,7 @@ var controller = {
 
 	},
 
+	//Manipulate model view to set currentCat object
 	setCurrentCat: function(cat){
 		model.currentCat = cat;
 		var index = controller.evaluateCurrentCatIndex(cat);
@@ -59,9 +40,11 @@ var controller = {
 
 	},
 
+	//Get the cat object this is currently set
 	getCurrentCat:function(){
 		return model.currentCat;
 	},
+
 
 	setCurrentCatIndex:function(index){
 		model.currentCatIndex = index;
@@ -80,6 +63,7 @@ var controller = {
 		}
 	},
 
+	//Update the details of the current cat in catDetailView as well cat Data Model
 	updateCurrentCat: function(name, path, count){
 		var index = controller.getCurrentCatIndex();
 
@@ -101,7 +85,6 @@ var controller = {
 	},
 
 	getCats: function(){
-		//return model.generateCats();
 		return model.CatList;
 	},
 
@@ -116,7 +99,12 @@ var controller = {
 };
 
 
+
+//Views
+
+//View extreme left of the page that shows the list of cats
 var catListView = {
+	//Initial state of catList View
 	init: function(){
 		var catList = controller.getCats();
 		controller.setCurrentCat(catList[0]);
@@ -132,6 +120,7 @@ var catListView = {
 		catListView.render();
 	},	
 
+	//Render catListView 
 	render: function(){
 		var catList = controller.getCats();
 		var listElements = document.getElementsByTagName("li");
@@ -159,7 +148,9 @@ var catListView = {
 	}
 };
 
+//View that shows the details of the cat viz: image, name, clickCount
 var catDetailView = {
+	//initialize the catDetail view	
 	init: function(){
 		this.catPicElem = document.getElementById("catPic");
 		this.catNameElem = document.getElementById("catName");
@@ -175,6 +166,7 @@ var catDetailView = {
 		this.render(cat);
 	},
 
+	//render view
 	render: function(cat){
 		//var cat = controller.getCurrentCat();
 		this.catPicElem.src = cat.image;
@@ -185,9 +177,9 @@ var catDetailView = {
 
 };
 
-
+//Admin anel Views lets you change the data for each cat. 
 var adminPanelView = {
-
+	//Initialize initial admin View
 	init: function(){
 		//Admin Fields
 		imageCatName = document.getElementById("admin_cat_name");
@@ -203,7 +195,7 @@ var adminPanelView = {
 
 			
 		
-				
+		//add Event Listeners to toggle admin View state onclick
 		adminButton.addEventListener('click', function(){
 			var cat = controller.getCurrentCat();
 			if (controller.adminView == false){
@@ -217,12 +209,14 @@ var adminPanelView = {
 			}
 		});
 
+		//Discards data in inputs(if changed) and hides Admin Panel
 		cancelButton.addEventListener('click', function(){
 			adminArea.style.display = "none";
 			controller.adminView = false;
 
 		});
 
+		//Applies changes to the cat list view and cat detail view
 		saveButton.addEventListener('click', function(){
 			var catName = imageCatName.value;
 			var path = imageCatPath.value;
@@ -233,6 +227,7 @@ var adminPanelView = {
 
 	},
 
+	//render Admin View
 	render: function(cat) {
 		imageCatName.value = cat.name;
 		imageCatPath.value = cat.image;
@@ -242,4 +237,5 @@ var adminPanelView = {
 
 };
 
+//Start the execution of the app
 controller.init();
